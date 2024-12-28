@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet.js Polygon Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([4.569, 103.462], 16); // Center on Area 1
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // GeoJSON data for Area 1
+        var area1 = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "label": "Area 1"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [
+                                [103.46198687368752, 4.5689910182023254],
+                                [103.46202609878094, 4.569004051682668],
+                                [103.46205224884324, 4.569004051682668],
+                                [103.46206532387436, 4.569017085162798],
+                                [103.46207839890553, 4.569017085162798],
+                                [103.46210454896777, 4.569017085162798],
+                                [103.46211762399895, 4.569030118642701],
+                                [103.46321592661565, 4.569473256817773],
+                                [103.4635166523318, 4.568808549451063],
+                                [103.4623006744348, 4.568339343880993],
+                                [103.46198687368752, 4.568977984721727],
+                                [103.46198687368752, 4.5689910182023254]
+                            ]
+                        ]
+                    }
+                }
+            ]
+        };
+
+        // Add GeoJSON layer to the map
+        L.geoJSON(area1, {
+            style: {
+                color: "blue",
+                weight: 2,
+                fillColor: "lightblue",
+                fillOpacity: 0.5
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties && feature.properties.label) {
+                    layer.bindPopup("Label: " + feature.properties.label);
+                }
+            }
+        }).addTo(map);
+    </script>
+</body>
+</html>
